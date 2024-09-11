@@ -32,3 +32,43 @@ uucp
 vpopmail
 xfs
 
+## Задача 2
+
+cat /etc/protocols | sort -n -r -k 2 | head -n 5 | awk '{print $2" "$1}'
+
+142 rohc
+141 wesp
+140 shim6
+139 hip
+138 manet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
