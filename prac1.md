@@ -30,8 +30,27 @@ echo "+${line}+"
 echo "| ${text} |"
 echo "+${line}+"
 ```
+```
+chmod +x banner
+```
+```
+./banner "Hello from RTU MIREA!"
+```
+
+![image](https://github.com/user-attachments/assets/822055d8-be7b-4b0f-88c8-bb283d11d00d)
 
 
+## Задача 4
+Написать программу для вывода всех идентификаторов (по правилам C/C++ или Java) в файле (без повторений).
+
+```
+#!/bin/bash
+file="$1"
+id=$(grep -o -E '\b[a-zA-Z]*\b' "$file" | sort -u)
+```
+```
+grep -oE '\b[a-zA-Z_][a-zA-Z0-9_]*\b' hello.c | grep -vE '\b(int|void|return|if|else|for|while|include|stdio)\b' | sort | uniq
+```
 
 
 
