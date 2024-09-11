@@ -1,6 +1,6 @@
 ## Задача 1
 
-cut -d: -f1 /etc/passwd | sort
+grep '.*' /etc/passwd | cut -d: -f1 | sort
 
 adm
 at
