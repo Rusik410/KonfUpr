@@ -99,45 +99,28 @@ solve minimize sum_first;
 
 Решить на MiniZinc задачу о зависимостях пакетов для рисунка, приведенного ниже.
 
-![](images/pubgrub.png)
+![image](https://github.com/user-attachments/assets/e6fc79e2-76e0-4dae-b1a5-056360eb272c)
+
 Решение:
 ```MiniZinc
-include "globals.mzn";
+set of int: MenuVersion = {100, 110, 120, 130, 150};
+set of int: DropdownVersion = {230, 220, 210, 200, 180};
+set of int: IconsVersion = {100, 200};
 
-% Определяем версии пакетов
-enum Version = {v1_0_0, v1_1_0, v1_2_0, v1_3_0, v1_4_0, v1_5_0, v1_8_0, v2_0_0, v2_1_0, v2_2_0, v2_3_0};
+var MenuVersion: menu;
+var DropdownVersion: dropdown;
+var IconsVersion: icons;
 
-% Определяем пакеты
-enum Package = {menu, dropdown, icons};
+constraint if menu >= 110 then dropdown >= 200 else dropdown = 180 endif;
 
-% Массив для хранения выбранных версий пакетов
-array[Package] of var Version: versions;
-
-% Зависимости пакетов
-array[Package] of set of Version: dependencies = [
-    {v1_0_0, v1_1_0, v1_2_0, v1_3_0, v1_4_0, v1_5_0}, % menu
-    {v1_8_0, v2_0_0, v2_1_0, v2_2_0, v2_3_0}, % dropdown
-    {v1_0_0, v2_0_0} % icons
-];
-
-% Ограничение для версии menu
-constraint versions[menu] = v1_5_0; 
-
-% Ограничение: root зависит от menu, добавим переменную для root
-var Version: root_version;
-
-% Ограничение: root_version должен быть в зависимостях menu
-constraint root_version in dependencies[menu];
+constraint if dropdown <= 200 /\ dropdown > 180 then icons = 200 else icons = 100 endif;
 
 solve satisfy;
-
-% Вывод результата
-output ["Версии:\n"] ++
-  [ show(versions[p]) ++ " " ++ show(p) ++ "\n" | p in Package] ++
-  ["Root Версии: " ++ show(root_version)];
 ```
 Результат:
-![image](https://github.com/user-attachments/assets/5eee8e9a-cea4-48c4-95e9-934d25f02d7a)
+
+![image](https://github.com/user-attachments/assets/f02d4149-0c95-49bc-a471-f53ab820e63d)
+
 
 ## Задача 6
 Решить на MiniZinc задачу о зависимостях пакетов для следующих данных:
